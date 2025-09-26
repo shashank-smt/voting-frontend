@@ -49,11 +49,12 @@ function App() {
   const ensureGanacheNetwork = async () => {
     if (!window.ethereum) throw new Error('MetaMask not installed')
     const chainId = await window.ethereum.request({ method: 'eth_chainId' })
-    if (chainId !== '0x539') {
+    if (chainId !== '0xaa36a7') {
+      // Sepolia chainId
       try {
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x539' }],
+          params: [{ chainId: '0xaa36a7' }],
         })
       } catch (switchError) {
         if (switchError.code === 4902) {
@@ -61,11 +62,13 @@ function App() {
             method: 'wallet_addEthereumChain',
             params: [
               {
-                chainId: '0x539',
-                chainName: 'Local Ganache',
-                rpcUrls: ['http://127.0.0.1:8545'],
+                chainId: '0xaa36a7',
+                chainName: 'Sepolia Testnet',
+                rpcUrls: [
+                  'https://eth-sepolia.g.alchemy.com/v2/YOUR_ALCHEMY_KEY',
+                ],
                 nativeCurrency: {
-                  name: 'Ethereum',
+                  name: 'Sepolia ETH',
                   symbol: 'ETH',
                   decimals: 18,
                 },
